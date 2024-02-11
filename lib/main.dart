@@ -1,3 +1,4 @@
+import 'package:anchor_prototype/favorites.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class FirstRoute extends StatelessWidget {
       appBar: AppBar(
         title: const Text('First Route'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Welcome to the Cent!'),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -42,10 +43,12 @@ class FirstRoute extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const SecondRoute()),
               );
               break;
+
+            // Leads to 'Favorites' page (code found in 'favorites.dart')
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ThirdRoute()),
+                MaterialPageRoute(builder: (context) => const Favorites()),
               );
               break;
             default: // First item is basically a no-op since we are already on the first route
@@ -65,27 +68,6 @@ class SecondRoute extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Second Route'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
-        ),
-      ),
-    );
-  }
-}
-
-class ThirdRoute extends StatelessWidget {
-  const ThirdRoute({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Third Route'),
       ),
       body: Center(
         child: ElevatedButton(
