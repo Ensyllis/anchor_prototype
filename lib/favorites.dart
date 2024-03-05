@@ -1,6 +1,7 @@
 // File contains 'Favorites' page
 
 import 'package:anchor_prototype/main.dart';
+import 'package:anchor_prototype/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -170,91 +171,120 @@ class _FavoritesState extends State<Favorites> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(// Used to print 'Favorites' title (and maybe pfp?)
-        shadowColor: Colors.black,
-        surfaceTintColor: Colors.white,
-        bottomOpacity: 1.0,
-        scrolledUnderElevation: 1.0,
-        backgroundColor: Colors.white,
-        toolbarHeight: 135.0,
-        title: const Center(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 45.0),
-            child: Text(
-              'Favorites',
-              style: TextStyle(
-                fontSize: 40.0,
-                fontWeight: FontWeight.w800,
+    return PopScope( // Removes swipe back gesture
+      canPop: false,
+      child: Scaffold(
+        appBar: AppBar(// Used to print 'Favorites' title (and maybe pfp?)
+          shadowColor: Colors.black,
+          surfaceTintColor: Colors.white,
+          bottomOpacity: 1.0,
+          scrolledUnderElevation: 1.0,
+          backgroundColor: Colors.white,
+          toolbarHeight: 115.0,
+          title: const Center(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 30.0),
+              child: Text(
+                'Favorites',
+                style: TextStyle(
+                  fontSize: 40.0,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ),
           ),
+          automaticallyImplyLeading: false,
         ),
-        automaticallyImplyLeading: false,
-      ),
-
-      body: const Center(// Contains list of slidable tiles
-        child: SlidableAutoCloseBehavior(
-          closeWhenOpened: true,
-          child: ListOfFavorites(),
+      
+        body: const Center(// Contains list of slidable tiles
+          child: SlidableAutoCloseBehavior(
+            closeWhenOpened: true,
+            child: ListOfFavorites(),
+          ),
         ),
-      ),
-      bottomNavigationBar: Container(// Creates shadow to outline BottomNavigationBar
-        decoration: const BoxDecoration(
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              blurRadius: 10,
-              color: Colors.grey,
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(// Containes 3 icon buttons
-          backgroundColor: Colors.white,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(// Home screen (map screen)
-              icon: Icon(
-                size: 30,
-                CupertinoIcons.map,
-                color: Colors.black,
+        bottomNavigationBar: Container(// Creates shadow to outline BottomNavigationBar
+          decoration: const BoxDecoration(
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                blurRadius: 10,
+                color: Colors.grey,
               ),
-              label: 'Maps',
+            ],
+          ),
+          child: SizedBox(
+            height: 118,
+            child: BottomNavigationBar(// Containes 5 icon buttons
+              backgroundColor: Colors.white,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(// Home screen
+                  icon: Icon(
+                    size: 42.0,
+                    Icons.home_outlined,
+                    color: Colors.black,
+                  ),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(// Map screen
+                  icon: Icon(
+                    size: 42.0,
+                    Icons.location_on_outlined,
+                    color: Colors.black,
+                  ),
+                  label: 'Maps',
+                ),
+                BottomNavigationBarItem(// Camera Screen
+                  icon: Icon(
+                    size: 42.0,
+                    Icons.add_box_outlined,
+                    color: Colors.black,
+                  ),
+                  label: 'Camera',
+                ),
+                BottomNavigationBarItem(// Favorites screen (unusable bc already in screen)
+                  icon: Icon(
+                    size: 42.0,
+                    CupertinoIcons.heart_fill,
+                    color: Colors.black,
+                  ),
+                  label: 'Favorites',
+                ),
+                BottomNavigationBarItem(// Account screen (SecondRoute)
+                  icon: Icon(
+                    size: 42.0,
+                    Icons.account_circle_outlined,
+                    color: Colors.black,
+                  ),
+                  label: 'Account',
+                ),
+              ],
+              onTap: (index) {
+                switch (index) {
+                  case 0:
+                    Navigator.push(// Go to Home screen
+                      context,
+                      MaterialPageRoute(builder: (context) => const Home()),
+                    );
+                    break;
+                  case 1:
+                    Navigator.push(// Go to Home screen
+                      context,
+                      MaterialPageRoute(builder: (context) => const FirstRoute()),
+                    );
+                    break;
+                  case 4:
+                    Navigator.push(// Go to Account screen
+                      context,
+                      MaterialPageRoute(builder: (context) => const SecondRoute()),
+                    );
+                    break;
+                  default: // Favorites item is basically a no-op since we are already on the Favorites screen
+                }
+              },
+              type: BottomNavigationBarType.fixed,
             ),
-            BottomNavigationBarItem(// Favorites screen (unusable bc already in screen)
-              icon: Icon(
-                size: 30,
-                CupertinoIcons.heart,
-                color: Colors.black,
-              ),
-              label: 'Favorites',
-            ),
-            BottomNavigationBarItem(// Account screen (SecondRoute)
-              icon: Icon(
-                size: 30,
-                Icons.account_box_outlined,
-                color: Colors.black,
-              ),
-              label: 'Account',
-            ),
-          ],
-          onTap: (index) {
-            switch (index) {
-              case 0:
-                Navigator.push(// Go to Home screen
-                  context,
-                  MaterialPageRoute(builder: (context) => const FirstRoute()),
-                );
-                break;
-              case 2:
-                Navigator.push(// Go to Account screen
-                  context,
-                  MaterialPageRoute(builder: (context) => const SecondRoute()),
-                );
-                break;
-              default: // Favorites item is basically a no-op since we are already on the Favorites screen
-            }
-          },
+          ),
         ),
       ),
     );
@@ -278,7 +308,7 @@ class _ListOfFavoritesState extends State<ListOfFavorites> {
 
   // Builds discount format. Format: either '10%' or '$10'.
   String discountBuilder(int index, String symbol){
-    return symbol == '%' ? '${info[index].discount}$symbol\nOFF' : '$symbol${info[index].discount}\nOFF';
+    return symbol == '%' ? '${info[index].discount}$symbol' : '$symbol${info[index].discount}';
   }
 
   // Builds dollar-sign indicator (expensivity)
@@ -292,133 +322,153 @@ class _ListOfFavoritesState extends State<ListOfFavorites> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(// Used .separated to generate dividers
-      itemCount: info.length,
-      separatorBuilder: (_, __) => const Divider(height: 1),
-      itemBuilder: (BuildContext context, int index) {
-        final information = info[index];
-        if (index == 0 || index == info.length - 1){// Takes care of starting and ending dividers
-          return Container();
-        }
-        return Slidable(
-          key: Key(information.name),
-          endActionPane: ActionPane(
-            motion: const StretchMotion(),// Sliding animation
-            extentRatio: 0.25,
-            dismissible: DismissiblePane(// Sliding the tile all the way (automatically delete)
-              onDismissed: () => _onDismissed(index, Actions.delete),
-            ),
-            children: [
-              SlidableAction(// Sliding tile part way to reveal 'Delete' button
-                onPressed: (context) {
-                  _onDismissed(index, Actions.delete);
-                },
-                icon: CupertinoIcons.trash,
-                backgroundColor: Colors.red,
+    return Container(
+      color: Colors.white,
+      child: ListView.separated(// Used .separated to generate dividers
+        itemCount: info.length,
+        separatorBuilder: (_, __) => const Divider(height: 1),
+        itemBuilder: (BuildContext context, int index) {
+          final information = info[index];
+          if (index == 0 || index == info.length - 1){// Takes care of starting and ending dividers
+            return Container();
+          }
+          return Slidable(
+            key: Key(information.name),
+            endActionPane: ActionPane(
+              motion: const StretchMotion(),// Sliding animation
+              extentRatio: 0.25,
+              dismissible: DismissiblePane(// Sliding the tile all the way (automatically delete)
+                onDismissed: () => _onDismissed(index, Actions.delete),
               ),
-            ],
-          ),
-          child: Builder(// Actual tile builder
-            builder: (context) {
-              return ListTile(
-                contentPadding: const EdgeInsets.fromLTRB(16.0, 0.0, 5.0, 0.0),
-                minVerticalPadding: 0.0,
-                tileColor: Colors.white,
-                title: IntrinsicHeight(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        height: 68.9,
-                        width: 210.0,
-                        child: Column(// Restaurant name & resturant type
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              info[index].name,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+              children: [
+                SlidableAction(// Sliding tile part way to reveal 'Delete' button
+                  onPressed: (context) {
+                    _onDismissed(index, Actions.delete);
+                  },
+                  icon: CupertinoIcons.trash,
+                  backgroundColor: Colors.red,
+                ),
+              ],
+            ),
+            child: Builder(// Actual tile builder
+              builder: (context) {
+                return ListTile(
+                  contentPadding: const EdgeInsets.fromLTRB(16.0, 0.0, 5.0, 0.0),
+                  minVerticalPadding: 0.0,
+                  tileColor: Colors.white,
+                  title: IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          height: 68.9,
+                          width: 210.0,
+                          child: Column(// Restaurant name & resturant type
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                info[index].name,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
-                            ),
-                            Text(
-                              info[index].restaurantType,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 15,
+                              Text(
+                                info[index].restaurantType,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 12,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(// Discount
-                        child: SizedBox(
-                          child: Text(
-                            discountBuilder(index, info[index].discountSymbol),
-                            textAlign: TextAlign.end,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 17,
-                            )
+                            ],
                           ),
                         ),
-                      ),
-                      const VerticalDivider(// Divider
-                        width: 12,
-                        thickness: 1.0,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(// Open/close times & expensivity
-                        width: 111,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '${info[index].openHour}:00${info[index].openAmPm}-${info[index].closeHour}:00${info[index].closeAmPm}',
-                              textAlign: TextAlign.end,
-                              style: const TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                            Row(
+                        Expanded(// Discount
+                          child: SizedBox(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  dollarsIndicator(info[index].expensivity),
+                                  discountBuilder(index, info[index].discountSymbol),
+                                  textAlign: TextAlign.end,
                                   style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
+                                    fontFamily: 'Helvetica',
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 14,
+                                  )
                                 ),
-                                Text(
-                                  dollarsIndicator(4 - info[index].expensivity),
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.grey,
+                                const Text(
+                                  'OFF',
+                                  style: TextStyle(
+                                    fontFamily: 'Helvetica',
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 10,
                                   ),
                                 ),
                               ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(// Open/close times & expensivity
+                          width: 111,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '${info[index].openHour}:00${info[index].openAmPm}-${info[index].closeHour}:00${info[index].closeAmPm}',
+                                  textAlign: TextAlign.end,
+                                  style: const TextStyle(
+                                    fontFamily: 'Helvetica',
+                                    fontSize: 10,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      dollarsIndicator(info[index].expensivity),
+                                      style: const TextStyle(
+                                        fontFamily: 'Helvetica',
+                                        fontSize: 10,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      dollarsIndicator(4 - info[index].expensivity),
+                                      style: const TextStyle(
+                                        fontFamily: 'Helvetica',
+                                        fontSize: 10,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                onTap: () {// Closes one tile when opening another or when scrolling
-                  final slidable = Slidable.of(context)!;
-                  final isClosed = slidable.actionPaneType.value == ActionPaneType.none;
-                  if (isClosed) {
-                    slidable.openStartActionPane();
-                  }else{
-                    slidable.close();
-                  }
-                },
-              );
-            }
-          ),
-        );
-      },
-      //separatorBuilder: (BuildContext context, int index) => const Divider(height: 1),
+                  onTap: () {// Closes one tile when opening another or when scrolling
+                    final slidable = Slidable.of(context)!;
+                    final isClosed = slidable.actionPaneType.value == ActionPaneType.none;
+                    if (isClosed) {
+                      slidable.openStartActionPane();
+                    }else{
+                      slidable.close();
+                    }
+                  },
+                );
+              }
+            ),
+          );
+        },
+        //separatorBuilder: (BuildContext context, int index) => const Divider(height: 1),
+      ),
     );
   }
 }
