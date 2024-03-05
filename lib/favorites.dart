@@ -171,7 +171,7 @@ class _FavoritesState extends State<Favorites> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
+    return PopScope( // Removes swipe back gesture
       canPop: false,
       child: Scaffold(
         appBar: AppBar(// Used to print 'Favorites' title (and maybe pfp?)

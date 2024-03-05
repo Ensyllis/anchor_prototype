@@ -14,7 +14,7 @@ class FirstRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
+    return PopScope( // Removes swipe back gesture
       canPop: false,
       child: Scaffold(
         appBar: AppBar(

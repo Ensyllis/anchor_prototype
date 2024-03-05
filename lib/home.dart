@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:anchor_prototype/main.dart';
 import 'package:anchor_prototype/favorites.dart';
 
-class Post {
+class Post { // Contains the info of each post
   bool like = false;
   int likes = 0;
   final String username;
   final String location;
   final int discount;
   final String discountSymbol;
-  final String image;
+  final String image; // Used assets to store image files. See flutter/assets in pubspec.yaml
   final String text;
 
   Post({
@@ -49,10 +49,10 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
+    return PopScope( // Removes swipe back gesture
       canPop: false,
       child: Scaffold(
-        appBar: AppBar(// Used to print 'Favorites' title (and maybe pfp?)
+        appBar: AppBar(// Used to print 'CENT' title (and maybe pfp?)
           shape: const Border(
             bottom: BorderSide(
               color: Colors.grey,
@@ -197,7 +197,7 @@ class _ListOfPostsState extends State<ListOfPosts> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Row(
+                  child: Row( // User pfp, username, location, discount
                     children: [
                       // CircleAvatar(
                       //   radius: 20, 
@@ -242,7 +242,7 @@ class _ListOfPostsState extends State<ListOfPosts> {
                   ),
                 ),
                 const SizedBox(height: 5,),
-                Image(
+                Image( // Post image
                   image: AssetImage(information.image),
                   height: 380,
                   width: 395,
@@ -255,7 +255,7 @@ class _ListOfPostsState extends State<ListOfPosts> {
                 //   fit: BoxFit.fitWidth,
                 // ),
                 //Image.network('https://im.ziffdavisinternational.com/ign_de/screenshot/default/pacific-rim-22569-2880x1800_reqd.jpg'),
-                Padding(
+                Padding( // Interactive heart icon, number of "likes", description
                   padding: const EdgeInsets.fromLTRB(3, 3, 10, 0),
                   child: SizedBox(
                     height: 100,
@@ -307,32 +307,10 @@ class _ListOfPostsState extends State<ListOfPosts> {
                             ),
                           ),
                         ),
-                        // IconButton(
-                        //   padding: const EdgeInsets.fromLTRB(0, 0, 5, 0), 
-                        //   constraints: const BoxConstraints(),
-                        //   onPressed: () {}, 
-                        //   icon: const Icon(Icons.comment_outlined)
-                        // ),
-                        // IconButton(
-                        //   padding: const EdgeInsets.fromLTRB(0, 0, 5, 0), 
-                        //   constraints: const BoxConstraints(),
-                        //   onPressed: () {}, 
-                        //   icon: const Icon(Icons.bookmark_outline)
-                        // ),
                       ]
                     ),
                   ),
                 ),
-                // const Padding(
-                //   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                //   child: Row(
-                //     children: [
-                //       Text(
-                //         "10 likes",
-                //       ),
-                //     ]
-                //   ), 
-                // ),
               ],
             ),
           );
