@@ -1,4 +1,5 @@
 import 'package:anchor_prototype/favorites.dart';
+import 'package:anchor_prototype/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,47 +14,50 @@ class FirstRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('First Route'),
-      ),
-      body: const Center(
-        child: Text('Welcome to the Cent!'),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_rounded),
-            label: 'Account',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Maps',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
-          ),
-        ],
-        onTap: (index) {
-          switch (index) {
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SecondRoute()),
-              );
-              break;
-
-            // Leads to 'Favorites' page (code found in 'favorites.dart')
-            case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Favorites()),
-              );
-              break;
-            default: // First item is basically a no-op since we are already on the first route
-          }
-        },
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('First Route'),
+        ),
+        body: const Center(
+          child: Text('Welcome to the Cent!'),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_rounded),
+              label: 'Account',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Maps',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: 'Favorites',
+            ),
+          ],
+          onTap: (index) {
+            switch (index) {
+              case 1:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SecondRoute()),
+                );
+                break;
+      
+              // Leads to 'Favorites' page (code found in 'favorites.dart')
+              case 2:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Favorites()),
+                );
+                break;
+              default: // First item is basically a no-op since we are already on the first route
+            }
+          },
+        ),
       ),
     );
   }
